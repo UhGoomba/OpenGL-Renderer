@@ -55,7 +55,7 @@ public:
 	auto GetNumMaterials() const noexcept { return m_materialCache.size(); }
 
 private:
-	std::unordered_map<std::string, ModelPtr> m_modelCache;
-	std::unordered_map<std::string, unsigned int> m_textureCache;
-	std::unordered_map<std::string, PBRMaterialPtr> m_materialCache;
+	std::unordered_map<std::filesystem::path, ModelPtr> m_modelCache;
+	std::unordered_map<std::filesystem::path, unsigned int> m_textureCache;
+	std::unordered_map<std::filesystem::path, PBRMaterialPtr> m_materialCache;
 };

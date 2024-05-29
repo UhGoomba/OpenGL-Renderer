@@ -1,8 +1,9 @@
 #pragma once
 
+#include "imgui/imgui.h"
+
 /***********************************************************************************/
-// Forward Declarations
-struct nk_context;
+// Forward Declarations 
 struct GLFWwindow;
 struct FrameStats;
 
@@ -23,5 +24,5 @@ public:
 	void Shutdown() const;
 
 private:
-	nk_context* m_nuklearContext{ nullptr };
+	ImGuiIO& io;
 };

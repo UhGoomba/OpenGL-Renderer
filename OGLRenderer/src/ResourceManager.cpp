@@ -6,7 +6,6 @@
 #include <cassert>
 #include <string_view>
 
-#define STB_IMAGE_IMPLEMENTATION
 #define STBI_FAILURE_USERMSG
 #include <stb_image.h>
 
@@ -174,7 +173,7 @@ unsigned int ResourceManager::LoadTexture(const std::filesystem::path& path, con
 		
 	} else {
 		int width = 0, height = 0, nrComponents = 0;
-		unsigned char* data = stbi_load(pathToLoad.c_str(), &width, &height, &nrComponents, 0);
+		unsigned char* data = stbi_load(pathToLoad.string().c_str(), &width, &height, &nrComponents, 0);
 		if (!data) {
 			std::cerr << "Failed to load texture: " << path << std::endl;
 			glDeleteTextures(1, &textureID);

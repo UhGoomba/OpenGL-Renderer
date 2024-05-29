@@ -31,7 +31,6 @@ private:
 	// Core Systems
 	WindowSystem m_window;
 	RenderSystem m_renderer;
-	GUISystem m_guiSystem;
 
 	// All loaded scenes stored in memory
 	std::unordered_map<std::string, std::shared_ptr<SceneBase>> m_scenes;

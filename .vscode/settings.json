@@ -58,7 +58,21 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "any": "cpp",
+        "bitset": "cpp",
+        "charconv": "cpp",
+        "complex": "cpp",
+        "expected": "cpp",
+        "source_location": "cpp",
+        "format": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "typeindex": "cpp",
+        "variant": "cpp",
+        "forward_list": "cpp",
+        "unordered_set": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "makefile.launchConfigurations": [

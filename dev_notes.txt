@@ -1,0 +1,22 @@
+## Fixing the dependencies
+Finished GLM
+Finished GLFW
+- I'm not sure how to include GLFW. I added TheCherno's premake GLFW work, but it is dependent on the variable "outputdir." Eventually I should try a different fork, or maintain my own.
+Finished GLAD
+- I found a premake5.lua for glad in TheCherno's hazel repo. It also relies on outputdir. Now that I think about it, it isn't too bad. I could always rewrite it to define an outputdir variable itself 
+Finished pugixml
+- I copied the premak5.lua from GLAD and modified it for pugixml. Seems to work fine. still depends on "outputdir," I've decided I will be consistent with that. Just makes me anxious that an external submodule depends on outputdir being set in this repo.
+Finished FMT
+- FMT was fucking horrible. The developer added C++ modules at some point, and I have no idea how to write a premake file for it. I ended up using the old cpp file from the original repo, but the updated header files from the modern repo. This is extremely janky, and needs to be updated ASAP. Feels like a lot of work for literally like 3 uses of fmt in the entire repo...
+- I removed support for compute shaders in GLShaderProgramFactory.cpp. Right now we are using OpenGL 3.3, I might upgrade later and undo this.
+Removed Nuklear, Added ImGUI
+- This was also awful. Couldn't get nuklear to work. I got IMGUI added and rewrote GUISystem, but there is some issue about it in Engine.CPP. I ended up stripping it out of that. I'll do a full rewrite later.
+Updated Assimp
+- I ended up using this [awesome gist](https://gist.github.com/Cannedfood/a71652022f066c8032f5a1c01919c55d) for a premake file. I also updated the GLAD version and changed a bunch of shit in rendersystem.
+Updated STB, Project finally starts linking
+- I just got a huge dump of link errors
+- I forgot to actually link a bunch of libraries in the main premake. Added that, then IMGUI apparently needed glfw includes, so I added a janky relative path to it (maybe I should compile it as part of my project).
+
+TODO
+- Replace pragmas with standard header guards
+- Get rid of those strange forward declarations, they are strange.

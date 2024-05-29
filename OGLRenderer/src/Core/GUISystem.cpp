@@ -8,72 +8,60 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#define NK_INCLUDE_FIXED_TYPES
-#define NK_INCLUDE_STANDARD_IO
-#define NK_INCLUDE_STANDARD_VARARGS
-#define NK_INCLUDE_DEFAULT_ALLOCATOR
-#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
-#define NK_INCLUDE_FONT_BAKING
-#define NK_INCLUDE_DEFAULT_FONT
-#define NK_IMPLEMENTATION
-#define NK_GLFW_GL4_IMPLEMENTATION
-#define NK_KEYSTATE_BASED_INPUT
-#include <nuklear/nuklear.h>
-#include <nuklear/nuklear_glfw_gl4.h>
-
-// https://github.com/Immediate-Mode-UI/Nuklear/blob/master/demo/glfw_opengl4/main.c
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 const constexpr std::size_t MaxVertexBuffer{ 512 * 1024 };
 const constexpr std::size_t MaxElementBuffer{ 128 * 1024 };
 
 /***********************************************************************************/
 void GUISystem::Init(GLFWwindow* windowPtr) {
-	m_nuklearContext = nk_glfw3_init(windowPtr, NK_GLFW3_INSTALL_CALLBACKS, MaxVertexBuffer, MaxElementBuffer);
-
-	/* Load Fonts: if none of these are loaded a default font will be used  */
-	/* Load Cursor: if you uncomment cursor loading please hide the cursor */
-	{
-		struct nk_font_atlas* atlas;
-		nk_glfw3_font_stash_begin(&atlas);
-		nk_glfw3_font_stash_end();
-	}
+	// Setup Dear ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsLight();
+    ImGui_ImplGlfw_InitForOpenGL(windowPtr, true);
+    ImGui_ImplOpenGL3_Init();
 }
 
 /***********************************************************************************/
 void GUISystem::Render(const int framebufferWidth, 
 	const int framebufferHeight, const FrameStats& frameStats) {
 	
-	struct nk_colorf bg;
-	bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
 
-	nk_glfw3_new_frame();
+	{
+		static float f = 0.0f;
+		static int counter = 0;
 
-	const auto frameStatFlags = NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_NO_INPUT;
-	if (nk_begin(m_nuklearContext, "Frame Stats", nk_rect(0, framebufferHeight - 40, 720, 40), frameStatFlags)) {
-		nk_layout_row_begin(m_nuklearContext, NK_STATIC, 0, 1);
-		{
-			nk_layout_row_push(m_nuklearContext, 720);
-            nk_label(
-				m_nuklearContext,
-				fmt::format("Frame Time: {:.2f} ms ({:.0f} fps) | GPU VRAM Usage: {} MB | RAM Usage: {} MB",
-						frameStats.frameTimeMilliseconds,
-						1.0 / (frameStats.frameTimeMilliseconds / 1000.0),
-						frameStats.videoMemoryUsageKB / 1000,
-						frameStats.ramUsageKB / 1000
-					).c_str(),
-				NK_TEXT_LEFT
-			);
-		}
-		nk_layout_row_end(m_nuklearContext);
+		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+		ImGui::Text("This is some useful text.");
+
+		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
+
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+		ImGui::End();
 	}
 
-	nk_end(m_nuklearContext);
-
-
-	nk_glfw3_render(NK_ANTI_ALIASING_ON);
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 /***********************************************************************************/
 void GUISystem::Shutdown() const {
-	nk_glfw3_shutdown();
+	ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 }
