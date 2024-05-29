@@ -2,10 +2,11 @@
 ## Dependencies
 The project files are generated using [Premake](https://premake.github.io/)
 Intended to be built with makefiles
-# Generation Dependencies
-- Windows: [GNU Make](https://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81.exe)
-- Linux: Make for your distro
+### Generation Dependencies
+- GNU Make: [Windows Installer (Also add to path)](https://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81.exe), or make for your linux distro
 - CPP Compiler (Probably g++, [windows guide](https://www.youtube.com/watch?v=oC69vlWofJQ))
+Run the .bat (windows) or sh (linux) file to generate makefiles.
+Use the "make" command to build.
 
 # Legacy Details
 A modern OpenGL 3D rendering engine. The idea behind it is to be very simple to use: no weird abstraction layers, janky variable names, or massive 2000+ line classes. It's primarily a playground for me to implement (or at least try :P) different graphics programming techniques. Progress has been slow since I'm juggling full-time Univesity studies, work, and trying to be physically active. Eventually, I want to create a "scene-based" engine, where you can load up some model(s), add some fancy lights, and virtually explore it.
