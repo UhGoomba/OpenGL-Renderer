@@ -2,17 +2,22 @@ workspace "OGLRenderer"
     architecture "x64"
     configurations { "Debug", "Release" }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+OutputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "OGLRenderer"
     location "OGLRenderer"
     kind "ConsoleApp"
     language "C++"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+    objdir ("bin-obj/" .. OutputDir .. "/%{prj.name}")
 
     files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
+
+    includedirs
+    {
+        "%{wks.location}/external/glm/"
+    }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
