@@ -298,3 +298,5 @@ __pycache__/
 *.xsd.cs
 
 build/**/*
+Makefile
+Makefile
