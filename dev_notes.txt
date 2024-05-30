@@ -16,6 +16,7 @@ Updated Assimp
 Updated STB, Project finally starts linking
 - I just got a huge dump of link errors
 - I forgot to actually link a bunch of libraries in the main premake. Added that, then IMGUI apparently needed glfw includes, so I added a janky relative path to it (maybe I should compile it as part of my project).
+- GLFW and FMT are now throwing issues
 
 TODO
 - Replace pragmas with standard header guards
