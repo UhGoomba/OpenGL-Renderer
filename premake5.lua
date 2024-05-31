@@ -32,6 +32,8 @@ project "OGLRenderer"
     links
     {
         "glfw",
+        "opengl32",
+        "dwmapi",
         "glad",
         "pugixml",
         "fmt",
@@ -59,6 +61,7 @@ project "OGLRenderer"
         -- Link with appropriate Unix GLFW library (adjust names)
         links { "glfw3" }
 
+include "external/glfw"
 include "external/glad"
 include "external/pugixml"
 include "external/fmt"

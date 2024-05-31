@@ -10,6 +10,7 @@ endif
 
 ifeq ($(config),debug)
   OGLRenderer_config = debug
+  GLFW_config = debug
   glad_config = debug
   pugixml_config = debug
   fmt_config = debug
@@ -18,6 +19,7 @@ ifeq ($(config),debug)
 
 else ifeq ($(config),release)
   OGLRenderer_config = release
+  GLFW_config = release
   glad_config = release
   pugixml_config = release
   fmt_config = release
@@ -28,16 +30,22 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := OGLRenderer glad pugixml fmt imgui assimp
+PROJECTS := OGLRenderer GLFW glad pugixml fmt imgui assimp
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-OGLRenderer: glad pugixml fmt imgui assimp
+OGLRenderer: GLFW glad pugixml fmt imgui assimp
 ifneq (,$(OGLRenderer_config))
 	@echo "==== Building OGLRenderer ($(OGLRenderer_config)) ===="
 	@${MAKE} --no-print-directory -C OGLRenderer -f Makefile config=$(OGLRenderer_config)
+endif
+
+GLFW:
+ifneq (,$(GLFW_config))
+	@echo "==== Building GLFW ($(GLFW_config)) ===="
+	@${MAKE} --no-print-directory -C external/glfw -f Makefile config=$(GLFW_config)
 endif
 
 glad:
@@ -72,6 +80,7 @@ endif
 
 clean:
 	@${MAKE} --no-print-directory -C OGLRenderer -f Makefile clean
+	@${MAKE} --no-print-directory -C external/glfw -f Makefile clean
 	@${MAKE} --no-print-directory -C external/glad -f Makefile clean
 	@${MAKE} --no-print-directory -C external/pugixml -f Makefile clean
 	@${MAKE} --no-print-directory -C external/fmt -f Makefile clean
@@ -89,6 +98,7 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   OGLRenderer"
+	@echo "   GLFW"
 	@echo "   glad"
 	@echo "   pugixml"
 	@echo "   fmt"
