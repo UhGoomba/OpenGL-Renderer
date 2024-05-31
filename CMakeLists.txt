@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.1.0)
-project(OGLRenderer VERSION 1.0.0)
 cmake_policy(SET CMP0072 NEW)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,31 +17,4 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/external/pugixml/)
 
 find_package(OpenGL REQUIRED)
 
-set(${PROJECT_NAME}_SOURCE_DIR ${CMAKE_SOURCE_DIR}/${PROJECT_NAME})
-
-set(SOURCE_FILES
-	
-)
-
-set(IMGUI_SOURCES
-    ${CMAKE_SOURCE_DIR}/external/imgui/imgui.cpp
-    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_demo.cpp
-    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_draw.cpp
-    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_tables.cpp
-    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_widgets.cpp
-	${CMAKE_SOURCE_DIR}/external/imgui/backends/imgui_impl_opengl3.cpp
-	${CMAKE_SOURCE_DIR}/external/imgui/backends/imgui_impl_glfw.cpp
-)
-
-set(SINGLE_HEADER_IMPLEMENTATION
-	${CMAKE_SOURCE_DIR}/external/stb/stb_image_implementation.cpp
-)
-
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${SINGLE_HEADER_IMPLEMENTATION} ${IMGUI_SOURCES})
-
-# copy resources folder
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_NAME}/resources $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources)
-
-# link and inculde
-target_link_libraries(${PROJECT_NAME} PUBLIC glad glfw assimp glm fmt pugixml OpenGL::GL)
-target_include_directories(${PROJECT_NAME} PUBLIC src ${CMAKE_SOURCE_DIR}/external/imgui ${CMAKE_SOURCE_DIR}/external/stb/include)
+add_subdirectory(${CMAKE_SOURCE_DIR}/OGLRenderer)
